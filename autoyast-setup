@@ -114,3 +114,7 @@ VM 106 Login: root , linux
 Boot Paramters for autoyast control file (autoinst.xml)
 
 Boot Parameter: autoyast=ftp://username:password@x.x.x.x/autoinst.xml
+
+For pxe booting in pxelinux.cfg to add an autoyast configuration file add
+
+append autoyast=ftp://username:password@x.x.x.x/autoinst.xml
