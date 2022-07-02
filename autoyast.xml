@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE profile>
+<profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
+ <general>
+  <mode>
+  <confirm config:type="boolean">false</confirm>
+  </mode>
+ </general>
+  <software t="map">
+    <install_recommended t="boolean">true</install_recommended>
+    <patterns t="list">
+      <pattern>apparmor</pattern>
+      <pattern>base</pattern>
+      <pattern>basesystem</pattern>
+      <pattern>documentation</pattern>
+      <pattern>enhanced_base</pattern>
+      <pattern>fonts</pattern>
+      <pattern>fonts_opt</pattern>
+      <pattern>games</pattern>
+      <pattern>gnome</pattern>
+      <pattern>gnome_basic</pattern>
+      <pattern>gnome_basis</pattern>
+      <pattern>gnome_basis_opt</pattern>
+      <pattern>gnome_games</pattern>
+      <pattern>gnome_imaging</pattern>
+      <pattern>gnome_internet</pattern>
+      <pattern>gnome_multimedia</pattern>
+      <pattern>gnome_office</pattern>
+      <pattern>gnome_utilities</pattern>
+      <pattern>gnome_x11</pattern>
+      <pattern>gnome_yast</pattern>
+      <pattern>imaging</pattern>
+      <pattern>minimal_base</pattern>
+      <pattern>multimedia</pattern>
+      <pattern>office</pattern>
+      <pattern>sw_management</pattern>
+      <pattern>sw_management_gnome</pattern>
+      <pattern>x11</pattern>
+      <pattern>x11_enhanced</pattern>
+      <pattern>x11_yast</pattern>
+      <pattern>yast2_basis</pattern>
+      <pattern>yast2_desktop</pattern>
+    </patterns>
+  </software>
+  <timezone t="map">
+    <timezone>America/New_York</timezone>
+  </timezone>
+    <users config:type="list">
+  <user>
+    <username>root</username>
+    <user_password>password</user_password>
+    <encrypted config:type="boolean">false</encrypted>
+  </user>
+    <user>
+    <username>tux</username>
+    <user_password>password</user_password>
+    <encrypted config:type="boolean">false</encrypted>
+  </user>
+</users>
+</profile>
