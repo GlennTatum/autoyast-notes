@@ -1,0 +1,116 @@
+SUSE Infrastructure setup
+
+Important reference
+
+TFTP Debian: https://www.cyberciti.biz/faq/install-configure-tftp-server-ubuntu-debian-howto/
+
+FTP Debian: https://itsfoss.com/set-ftp-server-linux/
+
+SUSE Autoyast Guide: https://doc.opensuse.org/projects/autoyast/
+
+SUSE Autoyast Example: https://documentation.suse.com/external-tree/en-us/suma/4.0/suse-manager/client-configuration/autoyast-example.html#advanced.topics.app.ay.example-simple
+
+SUSE Auto-Installation: https://documentation.suse.com/sles/12-SP4/html/SLES-all/Invoking.html
+
+SUSE PXE Server Guide: https://tr.opensuse.org/SuSE_install_with_PXE_boot
+
+SUSE Firewalld networking: https://www.cyberciti.biz/faq/set-up-a-firewall-using-firewalld-on-opensuse-linux/
+- Fowarding outgoing ports: --add-forward-port=port=<port_number>
+
+SUSE User YAST Configuration: https://doc.opensuse.org/projects/autoyast/#Configuration-Security-users
+
+MAKE SURE THAT THERE IS A ROOT USER TO BE ABLE TO LOGIN TO THE SYSTEM
+
+For complete automatic login
+
+<login_settings>
+  <autologin_user>glenn</autologin_user>
+  <password_less_login config:type="boolean">true</password_less_login>
+</login_settings>
+
+<user>
+    <username>root</username>
+    <user_password>password</user_password>
+    <encrypted config:type="boolean">false</encrypted>
+  </user>
+
+SUSE has similar concepts to RHEL
+such as firewalld SELINUX compatibility RPM
+
+Notes:
+
+- The autoinst.xml base template used to install a system will look completley different after running 'yast clone_system' as it applies
+the non agnostic system specfic values that needed to be filled in during the installation such as hard drive size and architecture
+It will also include the users and groups created for the software that was installed.
+
+Here is a general minimal autoyast file from opensuse:
+
+https://documentation.suse.com/external-tree/en-us/suma/4.0/suse-manager/client-configuration/autoyast-example.html#advanced.topics.app.ay.example-simple
+
+Description: This example autoyast file fills in all of the requirements which would be required to do an instlation of an opensuse server
+
+some things that do not appear in this file that are referenced in the autoyast guide which may appear as notable would be bootloader
+and partioning. However this is ok because when a value is blank in the autoyast configuration it will resort to a sensible automatic default
+recipe for that value not being fulfilled
+
+FOR AUTOMATIC INSTALLATION SET
+
+Implement: <general>
+  <mode>
+   <confirm config:type="boolean">false</confirm>
+  </mode>
+ </general>
+
+Source: https://doc.opensuse.org/projects/autoyast/#Profile-Format-ressources
+
+"An empty element, such as <foo></foo> or <bar/>, will not be in the parsed data model. Usually this is interpreted as wanting a sensible default value."
+
+---
+
+<?xml version="1.0"?>
+<!DOCTYPE profile>
+<profile xmlns="http://www.suse.com/1.0/yast2ns"
+         xmlns:config="http://www.suse.com/1.0/configns">
+ <general>
+  <mode>
+   <confirm config:type="boolean">false</confirm>
+  </mode>
+ </general>
+ <networking>
+  <keep_install_network config:type="boolean">true</keep_install_network>
+ </networking>
+ <software>
+  <install_recommended config:type="boolean">true</install_recommended>
+   <patterns config:type="list">
+    <pattern>base</pattern>
+   </patterns>
+ </software>
+ <users config:type="list">
+  <user>
+   <encrypted config:type="boolean">false</encrypted>
+   <fullname>root</fullname>
+   <gid>0</gid>
+   <home>/root</home>
+   <password_settings>
+    <expire></expire>
+    <flag></flag>
+    <inact></inact>
+    <max></max>
+    <min></min>
+    <warn></warn>
+   </password_settings>
+   <shell>/bin/bash</shell>
+   <uid>0</uid>
+   <username>root</username>
+   <user_password>linux</user_password>
+  </user>
+ </users>
+</profile>
+
+---
+
+VM 106 Login: root , linux
+
+Boot Paramters for autoyast control file (autoinst.xml)
+
+Boot Parameter: autoyast=ftp://username:password@x.x.x.x/autoinst.xml
